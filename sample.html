@@ -1,0 +1,419 @@
+    <!--Main Container - Centers Everything-->
+    <div id="container">
+
+        <!--Header-->
+        <div id="header">
+   <h2 id="logo_blank"><a><span></span></a></h2>
+        </div> <!-- end #header -->
+
+        <!--Main Content-->
+        <div id="main-content">
+<!--END of inserting Header.asp into this file-->
+
+
+
+<!-- $Id: comcast_network.usg.php 3158 2010-01-08 23:32:05Z slemoine $ -->
+
+<div id="sub-header">
+        <!--START of inserting userbar.asp into this file -->
+            <ul id="userToolbar" class="on">
+                <li class="first-child"><b>Hi admin</b></li>
+                <li><a href="home_loggedout.asp">Logout</a></li>
+                <li><a href="password_change.asp">Change Username/Password</a></li>
+            </ul>
+
+            <ul id="status">
+                <li class="battery first-child">
+                    <span>Battery</span> 0%
+                </li>
+                <li class="internet on">
+                    <span class="value on-off">On</span> Internet
+                    <div class="tooltip">
+                        Status: Connected<br/>
+                        0 computers connected
+                    </div>
+                </li>
+
+                <li class="wifi off"><span class="value on-off">Off</span> Wireless
+                    <div class="tooltip">
+                        Status: Inactive<br/>
+                        0 computers connected
+                    </div>
+                </li>
+                <li class="moca off"><span class="value on-off">Off</span> MoCA
+                    <div class="tooltip">
+                        Status: Inactive<br/>
+                        0 computers connected
+                    </div>
+                </li>
+                <li class="security off last"><span class="value on-off">Off</span>Off Security
+                    <div class="tooltip">
+                        Firewall is set to Off
+                    </div>
+                </li>
+            </ul>
+<!--END of inserting userbar.asp into this file-->
+
+</div><!-- end #sub-header -->
+
+<!--START of inserting nav.asp into this file -->
+<!-- $Id: nav.dory.php 3155 2010-01-06 19:36:01Z slemoine $ -->
+<!--Nav-->
+
+<div id="nav">
+<ul>
+    <li class="nav-gateway">
+        <a class="top-level" href="at_a_glance.asp">Gateway</a>
+        <ul>
+           <li class="nav-at-a-glance"><a href="at_a_glance.asp">At a Glance</a></li>
+           <li class="nav-connection"><a href="javascript:;">Connection</a>
+                <ul>
+                    <li class="nav-connection-status"><a href="connection_status.asp">Status</a></li>
+                    <li class="nav-vendor-network"><a href="vendor_network.asp">WAN Network</a></li>
+                    <li class="nav-local-ip-network"><a href="local_ip_configuration.asp">Local IP Network</a></li>
+                    <li class="nav-wifi-config"><a href="wireless_network_configuration.asp">Wi-Fi</a></li>
+                    <li class="nav-moca-config"><a href="moca_configuration.asp">MoCA</a></li>
+                </ul>
+            </li>
+            <li class="nav-firewall"><a href="javascript:;">Firewall</a>
+         <ul>
+             <li class="nav-firewall-ipv4"><a href="firewall_settings.asp">IPv4</a></li>
+            <li class="nav-firewall-ipv6"><a href="firewall_settings_ipv6.asp">IPv6</a></li>
+         </ul>
+      </li>
+            <li class="nav-software"><a href="software.asp">Software</a></li>
+            <li class="nav-hardware"><a href="javascript:;">Hardware</a>
+                <ul>
+                    <li class="nav-system-hardware"><a href="hardware.asp">System Hardware</a></li>
+                    <li class="nav-battery"><a href="battery.asp">Battery</a></li>
+                    <li class="nav-lan"><a href="lan.asp">LAN</a></li>
+                    <li class="nav-wifi"><a href="wifi.asp">Wireless</a></li>
+                    <li class="nav-usb"><a href="usb.asp">USB</a></li>
+                </ul>
+            </li>
+            <li class="nav-wizard"><a href="wizard_step1.asp">Wizard</a></li>
+        </ul>
+    </li>
+    <li class="nav-connected-devices">
+        <a class="top-level" href="connected_devices_computers.asp">Connected Devices</a>
+        <ul>
+            <li class="nav-computers"><a href="connected_devices_computers.asp">Devices</a></li>
+        </ul>
+    </li>
+    <li class="nav-parental-control">
+        <a class="top-level" href="managed_sites.asp">Parental Control</a>
+        <ul>
+            <li class="nav-sites"><a href="managed_sites.asp">Managed Sites</a></li>
+            <li class="nav-services"><a href="managed_services.asp">Managed Services</a></li>
+            <li class="nav-devices"><a href="managed_devices.asp">Managed Devices</a></li>
+            <li class="nav-parental-reports"><a href="parental_reports.asp">Reports</a></li>
+        </ul>
+    </li>
+    <li class="nav-advanced">
+        <a class="top-level" href="port_forwarding.asp">Advanced</a>
+        <ul>
+            <li class="nav-port-forwarding"><a href="port_forwarding.asp">Port Forwarding</a></li>
+            <li class="nav-port-triggering"><a href="port_triggering.asp">Port Triggering</a></li>
+            <li class="nav-ip-filtering"><a href="ip_filtering.asp">IP Filtering</a></li>
+            <li class="nav-qos"><a href="qos.asp">QoS</a></li>
+            <!--li class='nav-port-blocking'><a href='port_blocking.asp'>Port Blocking</a></li>-->
+            <li class="nav-dmz"><a href="dmz.asp">DMZ</a></li>
+<li class="nav-dyn-dns"><a href="dyn_dns.asp">Dynamic DNS</a></li>
+            <li class="nav-device-discovery"><a href="device_discovery.asp">Device Discovery</a></li>
+            <li class="nav-advanced_options"><a href="advanced_options.asp">Advanced Options</a></li>
+            <li class="nav-mediasharing"><a href="javascript:;">Media Sharing</a>
+                <ul>
+                <li class="nav-mediasharing-DLNA"><a href="javascript:;">DLNA</a>
+                    <ul>
+                    <li class="nav-DLNA-settings"><a href="dlna_settings.asp">DLNA Settings</a></li>
+                    <li class="nav-DLNA-servers"><a href="digital_media_servers.asp">Digital Media Servers</a></li>
+                    </ul>
+                </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-troubleshooting">
+        <a class="top-level" href="troubleshooting_logs.asp">Troubleshooting</a>
+        <ul>
+            <li class="nav-logs"><a href="troubleshooting_logs.asp">Logs</a></li>
+            <li class="nav-diagnostic-tools"><a href="network_diagnostic_tools.asp">Diagnostic Tools</a></li>
+            <li class="nav-restore-reboot"><a href="restore_reboot.asp">Reset/Reboot Gateway</a></li>
+            <li class="nav-password"><a href="password_change.asp">Change Username/Password</a></li>
+        </ul>
+    </li>
+</ul>
+</div>
+<!--END of inserting nav.asp into this file-->
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+                        vendor.page.init("Gateway > Connection > WAN Network", "nav-vendor-network");
+                }
+);
+</script>
+
+<div id="content">
+    <h1>Gateway &gt; Connection &gt; WAN Network</h1>
+        <div id="educational-tip">
+        <p class="tip">View technical information related to your WAN network connection.</p><p class="hidden">You may need this information if you contact Time Warner for troubleshooting assistance.</p>
+        </div>
+        <div class="module forms">
+        <h2>WAN Network</h2>
+        <div class="form-row">
+                        <span class="readonlyLabel">Internet:</span> <span class="value">Active</span>
+        </div>
+        <div class="form-row odd">
+                        <span class="readonlyLabel">Local time:</span> <span class="value">2017_09_24 13:31:30</span>
+        </div>
+        <div class="form-row">
+                        <span class="readonlyLabel">System Uptime:</span> <span class="value">136 days 03h:46m:09s</span>
+        </div>
+        <div class="form-row odd">
+                        <span class="readonlyLabel">WAN IP Address (IPv4):</span> <span class="value">---.---.---.---</span>
+        </div>
+        <div class="form-row">
+                        <span class="readonlyLabel">DHCP Client (IPv4):</span> <span class="value">Enabled</span>
+        </div>
+        <div class="form-row odd">
+                        <span class="readonlyLabel">DHCP Lease Expire Time (IPv4):</span> <span class="value">--:--:--</span>
+        </div>
+        <div class="form-row">
+                        <span class="readonlyLabel">WAN MAC:</span> <span class="value">14 B7 F8 07 22 3F</span>
+        </div>
+                  <div class="form-row odd">
+ <span class="readonlyLabel">eMTA MAC:</span> <span class="value">14 B7 F8 07 22 3E</span>
+ </div>
+        <div class="form-row">
+                        <span class="readonlyLabel">CM MAC:</span> <span class="value">14 B7 F8 07 22 3D</span>
+        </div>
+        <div class="form-row odd"><span class="readonlyLabel">Host Name:</span> <span class="value"></span></div><div class="form-row"><span class="readonlyLabel">Domain Name:</span> <span class="value"></span></div>
+    </div>
+
+    <div class="module forms">
+        <h2>Initialization Procedure</h2>
+        <div class="form-row">
+                        <span class="readonlyLabel">Initialize Hardware:</span> <span class="value">Complete</span>
+        </div>
+        <div class="form-row odd">
+                        <span class="readonlyLabel">Acquire Downstream Channel:</span> <span class="value">Complete</span>
+        </div>
+        <div class="form-row">
+                        <span class="readonlyLabel">Upstream Ranging:</span> <span class="value">Complete</span>
+        </div>
+        <div class="form-row odd">
+                        <span class="readonlyLabel">DHCP Bound:</span> <span class="value">Complete</span>
+        </div>
+        <div class="form-row">
+                        <span class="readonlyLabel">Set Time of Day:</span> <span class="value">Complete</span>
+        </div>
+        <div class="form-row odd">
+                        <span class="readonlyLabel">Configuration File Download:</span> <span class="value">Complete</span>
+        </div>
+        <div class="form-row">
+                        <span class="readonlyLabel">Registration:</span> <span class="value">Complete</span>
+        </div>
+    </div>
+
+
+
+    <div class="module forms">
+        <table cellspacing="0" cellpadding="0" class="data">
+        <thead>
+            <tr>
+                <th colspan="2">Cable Modem</th>
+            </tr>
+        </thead>
+            <tbody><tr class="odd">
+                <th class="row-label">HW Version:</th>
+            <td>1.1</td>
+        </tr>
+            <tr>
+                <th class="row-label">Vendor:</th>
+                        <td>Technicolor</td>
+        </tr>
+                    <tr class="odd">
+                <th class="row-label">BOOT Version:</th>
+            <td>4.0.7_Technicolor</td>
+        </tr>
+            <tr>
+                <th class="row-label">Core Version:</th>
+                        <td>01.ED.04.32.00</td>
+        </tr>
+                    <tr class="odd">
+                <th class="row-label">Model:</th>
+            <td>TC8717T</td>
+        </tr>
+            <tr>
+                <th class="row-label">Product Type:</th>
+                        <td>Technicolor DOCSIS 3.0 Packet Cable 2.0 advanced cable gateway </td>
+        </tr>
+        <tr class="odd">
+                <th class="row-label">Flash Part:</th>
+            <td>128 MB</td>
+        </tr>
+            <tr>
+                <th class="row-label">Download Version:</th>
+                        <td>01.ED.04.32.00</td>
+        </tr>
+        <tr class="odd">
+                <th class="row-label">Serial Number:</th>
+            <td>CP1701DBFT7</td>
+        </tr>
+    </tbody></table>
+    </div>
+
+<div class="module" style="overflow:auto">
+        <table cellspacing="0" cellpadding="0" class="data">
+        <thead>
+            <tr>
+                <th>Downstream</th>
+                <th colspan="16">Channel Bonding Value </th>
+            </tr>
+        </thead>
+            <tbody><tr class="odd">
+                <th class="row-label">Index</th>
+                <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td>
+        </tr>
+        <tr>
+                <th class="row-label">Lock Status</th>
+                <td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td>
+        </tr>
+            <tr class="odd">
+                <th class="row-label">Frequency</th>
+                <td>279 MHz</td><td>393 MHz</td><td>291 MHz</td><td>297 MHz</td><td>303 MHz</td><td>417 MHz</td><td>315 MHz</td><td>321 MHz</td><td>327 MHz</td><td>333 MHz</td><td>339 MHz</td><td>381 MHz</td><td>351 MHz</td><td>357 MHz</td><td>363 MHz</td><td>369 MHz</td>
+        </tr>
+            <tr>
+                <th class="row-label">SNR</th>
+                <td>43.7 dB</td><td>43.7 dB</td><td>43.7 dB</td><td>43.8 dB</td><td>43.5 dB</td><td>43.5 dB</td><td>44.0 dB</td><td>43.4 dB</td><td>43.6 dB</td><td>43.8 dB</td><td>41.1 dB</td><td>44.0 dB</td><td>43.8 dB</td><td>43.5 dB</td><td>43.9 dB</td><td>43.5 dB</td>
+        </tr>
+            <tr class="odd">
+                <th class="row-label">Power</th>
+                <td> 8.3 dBmV</td><td> 8.5 dBmV</td><td> 8.2 dBmV</td><td> 8.3 dBmV</td><td> 8.2 dBmV</td><td> 8.5 dBmV</td><td> 8.8 dBmV</td><td> 8.2 dBmV</td><td> 8.8 dBmV</td><td> 9.0 dBmV</td><td> 8.8 dBmV</td><td> 8.9 dBmV</td><td> 8.7 dBmV</td><td> 8.4 dBmV</td><td> 8.8 dBmV</td><td> 8.4 dBmV</td>
+        </tr>
+            <tr>
+                <th class="row-label">Modulation</th>
+                <td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td><td style="width:65px">256 QAM</td>
+        </tr>
+        </tbody></table>
+</div> <!-- end .module -->
+
+<div class="module">
+        <table cellspacing="0" cellpadding="0" class="data">
+        <thead>
+            <tr>
+                <th>Upstream</th>
+                <th colspan="4">Channel Bonding Value </th>
+            </tr>
+        </thead>
+        <tbody><tr class="odd">
+                <th class="row-label">Index</th>
+            <td>1</td><td>2</td><td>3</td><td>4</td>
+        </tr>
+        <tr>
+                <th class="row-label">Lock Status</th>
+                        <td>Locked</td><td>Locked</td><td>Locked</td><td>Locked</td>
+        </tr>
+            <tr class="odd">
+                <th class="row-label">Frequency</th>
+                        <td>30.6 MHz</td><td>24.2 MHz</td><td>19.4 MHz</td><td>37.0 MHz</td>
+        </tr>
+            <tr>
+                <th class="row-label">Symbol Rate</th>
+                        <td>5120 Ksym/sec</td><td>5120 Ksym/sec</td><td>2560 Ksym/sec</td><td>5120 Ksym/sec</td>
+        </tr>
+            <tr class="odd">
+                <th class="row-label">Power Level</th>
+                        <td>36.3 dBmV</td><td>36.3 dBmV</td><td>36.3 dBmV</td><td>36.3 dBmV</td>
+        </tr>
+            <tr>
+                <th class="row-label">Modulation</th>
+                        <td>ATDMA</td><td>ATDMA</td><td>TDMA</td><td>ATDMA</td>
+        </tr>
+            <tr class="odd">
+                <th class="row-label">Channel ID</th>
+                        <td>3</td><td>2</td><td>1</td><td>4</td>
+        </tr>
+        </tbody></table>
+</div> <!-- end .module -->
+
+    <div class="module" style="overflow: auto;">
+        <table cellspacing="0" cellpadding="0" class="data">
+            <tbody><tr>
+                <th>CM Error Codewords</th>
+                <th colspan="16"> </th>
+            </tr>
+            <tr>
+                <th class="row-label">Unerrored Codewords</th>
+                <td>1748517911</td>
+                <td>1449734062</td>
+                <td>80010146</td>
+                <td>3093975690</td>
+                <td>508775385</td>
+                <td>3415604582</td>
+                <td>3046067832</td>
+                <td>156221907</td>
+                <td>4030231564</td>
+                <td>1112722373</td>
+                <td>3996098730</td>
+                <td>3058934257</td>
+                <td>42173506</td>
+                <td>218280970</td>
+                <td>4178685573</td>
+                <td>1596607876</td>
+            </tr>
+            <tr class="odd">
+                <th class="row-label">Correctable Codewords</th>
+                <td>19150</td>
+                <td>8274</td>
+                <td>4680163</td>
+                <td>12917</td>
+                <td>6189</td>
+                <td>10352</td>
+                <td>9069</td>
+                <td>16632</td>
+                <td>12619</td>
+                <td>58994</td>
+                <td>1463557</td>
+                <td>16932</td>
+                <td>7214</td>
+                <td>12481</td>
+                <td>51678</td>
+                <td>10604</td>
+            </tr>
+            <tr>
+                <th class="row-label">Uncorrectable Codewords</th>
+                <td>28460</td>
+                <td>5244</td>
+                <td>623956</td>
+                <td>27731</td>
+                <td>6884</td>
+                <td>13689</td>
+                <td>10533</td>
+                <td>4923</td>
+                <td>13577</td>
+                <td>16765</td>
+                <td>40764</td>
+                <td>31518</td>
+                <td>9610</td>
+                <td>8956</td>
+                <td>62228</td>
+                <td>13264</td>
+            </tr>
+        </tbody></table>
+    </div>
+
+</div><!-- end #content -->
+<!--START of inserting footer.asp into this file -->
+            <!-- $Id: footer.php 2976 2009-09-02 21:42:51Z cporto $ -->
+                </div> <!-- end #main-content-->
+
+                <!--Footer-->
+                <div id="footer">
+                        <ul id="footer-links">
+               <br/>
+                        </ul>
+                </div> <!-- end #footer -->
+        </div> <!-- end #container -->
