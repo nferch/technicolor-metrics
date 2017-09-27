@@ -5,7 +5,7 @@ const (
 )
 
 var fixtureDsr = DownstreamResultList{
-	DownstreamChannels: []DownstreamResult{
+	Channels: []DownstreamResult{
 		DownstreamResult{
 			Index:      1,
 			LockStatus: "Locked",
@@ -138,7 +138,7 @@ var fixtureDsr = DownstreamResultList{
 }
 
 var fixtureUsr = UpstreamResultList{
-	UpstreamChannels: []UpstreamResult{
+	Channels: []UpstreamResult{
 		UpstreamResult{Index: 0x1, LockStatus: "Locked", Frequency: 0, SymbolRate: 5120, Power: 0, Modulation: "ATDMA"},
 		UpstreamResult{Index: 0x2, LockStatus: "Locked", Frequency: 0, SymbolRate: 5120, Power: 0, Modulation: "ATDMA"},
 		UpstreamResult{Index: 0x3, LockStatus: "Locked", Frequency: 0, SymbolRate: 2560, Power: 0, Modulation: "TDMA"},

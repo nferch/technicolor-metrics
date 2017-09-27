@@ -23,9 +23,9 @@ func TestDownstream(t *testing.T) {
 	if dserr != nil {
 		t.Errorf("Error Downstream(): %v", dserr)
 	}
-	for i := range fixtureDsr.DownstreamChannels {
-		if drl.DownstreamChannels[i] != fixtureDsr.DownstreamChannels[i] {
-			t.Errorf("Downstream() results differ for %d: %v vs %v", i, drl.DownstreamChannels[i], fixtureDsr.DownstreamChannels[i])
+	for i := range fixtureDsr.Channels {
+		if drl.Channels[i] != fixtureDsr.DownstreamChannels[i] {
+			t.Errorf("Downstream() results differ for %d: %v vs %v", i, drl.Channels[i], fixtureDsr.DownstreamChannels[i])
 		}
 	}
 }
@@ -46,13 +46,13 @@ func TestUpstream(t *testing.T) {
 	if userr != nil {
 		t.Errorf("Error Upstream(): %v", userr)
 	}
-	for i := 0; i < Max(len(url.UpstreamChannels), len(fixtureUsr.UpstreamChannels)); i++ {
-		if len(url.UpstreamChannels)-1 < i {
-			t.Errorf("Upstream() missing results for idx %d, should be %#v\n", i, fixtureUsr.UpstreamChannels[i])
-		} else if len(fixtureUsr.UpstreamChannels)-1 < i {
-			t.Errorf("Upstream() missing results for idx %d, should be %#v\n", i, url.UpstreamChannels[i])
-		} else if url.UpstreamChannels[i] != fixtureUsr.UpstreamChannels[i] {
-			t.Errorf("Upstream() results differ for %d: %#v vs %#v", i, url.UpstreamChannels[i], fixtureUsr.UpstreamChannels[i])
+	for i := 0; i < Max(len(url.Channels), len(fixtureUsr.Channels)); i++ {
+		if len(url.Channels)-1 < i {
+			t.Errorf("Upstream() missing results for idx %d, should be %#v\n", i, fixtureUsr.Channels[i])
+		} else if len(fixtureUsr.Channels)-1 < i {
+			t.Errorf("Upstream() missing results for idx %d, should be %#v\n", i, url.Channels[i])
+		} else if url.Channels[i] != fixtureUsr.Channels[i] {
+			t.Errorf("Upstream() results differ for %d: %#v vs %#v", i, url.Channels[i], fixtureUsr.Channels[i])
 		}
 	}
 }

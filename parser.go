@@ -14,7 +14,7 @@ type Stats struct {
 
 // DownstreamResultList is the stats for downstream.
 type DownstreamResultList struct {
-	DownstreamChannels []DownstreamResult
+	Channels []DownstreamResult
 }
 
 // DownstreamResult is a single channel's stats
@@ -29,7 +29,7 @@ type DownstreamResult struct {
 
 // UpstreamResultList is the stats for downstream.
 type UpstreamResultList struct {
-	UpstreamChannels []UpstreamResult
+	Channels []UpstreamResult
 }
 
 // UpstreamResult is a single channel's stats
@@ -91,24 +91,24 @@ func parseDownstream(sel *goquery.Selection) (*DownstreamResultList, error) {
 		})
 		tr.Find("td").Each(func(j int, td *goquery.Selection) {
 			// fmt.Printf("td %d %#v\n", j, td.Text())
-			if len(drl.DownstreamChannels) < j+1 {
-				drl.DownstreamChannels = append(drl.DownstreamChannels, DownstreamResult{})
+			if len(drl.Channels) < j+1 {
+				drl.Channels = append(drl.Channels, DownstreamResult{})
 			}
 			tdint, _ := strconv.Atoi(strings.Split(strings.TrimSpace(td.Text()), " ")[0])
 			tdfloat, _ := strconv.ParseFloat(strings.Split(strings.TrimSpace(td.Text()), " ")[0], 32)
 			switch rowTitle {
 			case "Index":
-				drl.DownstreamChannels[j].Index = uint8(tdint)
+				drl.Channels[j].Index = uint8(tdint)
 			case "Lock Status":
-				drl.DownstreamChannels[j].LockStatus = td.Text()
+				drl.Channels[j].LockStatus = td.Text()
 			case "Frequency":
-				drl.DownstreamChannels[j].Frequency = int16(tdint)
+				drl.Channels[j].Frequency = int16(tdint)
 			case "SNR":
-				drl.DownstreamChannels[j].SNR = float32(tdfloat)
+				drl.Channels[j].SNR = float32(tdfloat)
 			case "Power":
-				drl.DownstreamChannels[j].Power = float32(tdfloat)
+				drl.Channels[j].Power = float32(tdfloat)
 			case "Modulation":
-				drl.DownstreamChannels[j].Modulation = td.Text()
+				drl.Channels[j].Modulation = td.Text()
 			}
 		})
 	})
@@ -126,24 +126,24 @@ func parseUpstream(sel *goquery.Selection) (*UpstreamResultList, error) {
 		})
 		tr.Find("td").Each(func(j int, td *goquery.Selection) {
 			// fmt.Printf("td %d %#v\n", j, td.Text())
-			if len(url.UpstreamChannels) < j+1 {
-				url.UpstreamChannels = append(url.UpstreamChannels, UpstreamResult{})
+			if len(url.Channels) < j+1 {
+				url.Channels = append(url.Channels, UpstreamResult{})
 			}
 			tdint, _ := strconv.Atoi(strings.Split(strings.TrimSpace(td.Text()), " ")[0])
 			tdfloat, _ := strconv.ParseFloat(strings.Split(strings.TrimSpace(td.Text()), " ")[0], 32)
 			switch rowTitle {
 			case "Index":
-				url.UpstreamChannels[j].Index = uint8(tdint)
+				url.Channels[j].Index = uint8(tdint)
 			case "Lock Status":
-				url.UpstreamChannels[j].LockStatus = td.Text()
+				url.Channels[j].LockStatus = td.Text()
 			case "Frequency":
-				url.UpstreamChannels[j].Frequency = int16(tdint)
+				url.Channels[j].Frequency = int16(tdint)
 			case "Symbol Rate":
-				url.UpstreamChannels[j].SymbolRate = int16(tdint)
+				url.Channels[j].SymbolRate = int16(tdint)
 			case "Power":
-				url.UpstreamChannels[j].Power = float32(tdfloat)
+				url.Channels[j].Power = float32(tdfloat)
 			case "Modulation":
-				url.UpstreamChannels[j].Modulation = td.Text()
+				url.Channels[j].Modulation = td.Text()
 			}
 		})
 	})
