@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"strconv"
 	"strings"
@@ -10,6 +11,12 @@ import (
 // Stats is a container for data scraped from the vendor_network.asp page.
 type Stats struct {
 	body *goquery.Document
+}
+
+// ResultList is a common interface for parsed data
+type ResultList interface {
+	ParseFromStats(*Stats) error
+	parseFromSelection(*goquery.Selection) error
 }
 
 // DownstreamResultList is the stats for downstream.
@@ -42,26 +49,22 @@ type UpstreamResult struct {
 	Modulation string
 }
 
-// Downstream parses downstream stats from HTML
-func (s *Stats) Downstream() (*DownstreamResultList, error) {
-	// #content > div:nth-child(6)
-	//*[@id="content"]/div[5]/table/thead/tr/th[1]
-	tab, err := findStatsTable(s.body, "Downstream")
+func fromStats(r ResultList, s *Stats, direction string) error {
+	tab, err := findStatsTable(s.body, direction)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return parseDownstream(tab)
+	return r.parseFromSelection(tab)
 }
 
-// Upstream parses upstream stats from HTML
-func (s *Stats) Upstream() (*UpstreamResultList, error) {
-	// #content > div:nth-child(6)
-	//*[@id="content"]/div[5]/table/thead/tr/th[1]
-	tab, err := findStatsTable(s.body, "Upstream")
-	if err != nil {
-		return nil, err
-	}
-	return parseUpstream(tab)
+// ParseFromStats extracts the stats from the HTML in the Stats page
+func (drl *DownstreamResultList) ParseFromStats(s *Stats) error {
+	return fromStats(drl, s, "Downstream")
+}
+
+// ParseFromStats extracts the stats from the HTML in the Stats page
+func (url *UpstreamResultList) ParseFromStats(s *Stats) error {
+	return fromStats(url, s, "Upstream")
 }
 
 func findStatsTable(sel *goquery.Document, direction string) (*goquery.Selection, error) {
@@ -80,8 +83,7 @@ func findStatsTable(sel *goquery.Document, direction string) (*goquery.Selection
 	return nil, errors.New("cannot find table in HTML")
 }
 
-func parseDownstream(sel *goquery.Selection) (*DownstreamResultList, error) {
-	drl := DownstreamResultList{}
+func (drl *DownstreamResultList) parseFromSelection(sel *goquery.Selection) error {
 	rowTitle := ""
 	sel.Find("tbody > tr").Each(func(i int, tr *goquery.Selection) {
 		// fmt.Printf("tr %#v\n", tr)
@@ -112,11 +114,11 @@ func parseDownstream(sel *goquery.Selection) (*DownstreamResultList, error) {
 			}
 		})
 	})
-	return &drl, nil
+	fmt.Printf("Parsed as %#v\n", drl)
+	return nil
 }
 
-func parseUpstream(sel *goquery.Selection) (*UpstreamResultList, error) {
-	url := UpstreamResultList{}
+func (url *UpstreamResultList) parseFromSelection(sel *goquery.Selection) error {
 	rowTitle := ""
 	sel.Find("tbody > tr").Each(func(i int, tr *goquery.Selection) {
 		// fmt.Printf("tr %#v\n", tr)
@@ -147,5 +149,6 @@ func parseUpstream(sel *goquery.Selection) (*UpstreamResultList, error) {
 			}
 		})
 	})
-	return &url, nil
+	fmt.Printf("Parsed as %#v\n", url)
+	return nil
 }

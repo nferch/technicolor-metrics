@@ -2,64 +2,43 @@ package main
 
 import (
 	"os"
+	"reflect"
 	"testing"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/google/go-cmp/cmp"
 )
 
-func TestDownstream(t *testing.T) {
-	fixture, err := os.Open(fixtureFilename)
-	if err != nil {
-		t.Fatalf("Can't open fixture file: %v", err)
-	}
+// Ensure interfaces are fully implemented
+var _ ResultList = (*DownstreamResultList)(nil)
+var _ ResultList = (*UpstreamResultList)(nil)
 
-	sel, derr := goquery.NewDocumentFromReader(fixture)
-	if derr != nil {
-		t.Fatalf("Can't parse fixture file: %v", derr)
-	}
-
-	s := &Stats{body: sel}
-	drl, dserr := s.Downstream()
-	if dserr != nil {
-		t.Errorf("Error Downstream(): %v", dserr)
-	}
-	for i := range fixtureDsr.Channels {
-		if drl.Channels[i] != fixtureDsr.DownstreamChannels[i] {
-			t.Errorf("Downstream() results differ for %d: %v vs %v", i, drl.Channels[i], fixtureDsr.DownstreamChannels[i])
-		}
-	}
-}
-
-func TestUpstream(t *testing.T) {
-	fixture, err := os.Open(fixtureFilename)
-	if err != nil {
-		t.Fatalf("Can't open fixture file: %v", err)
-	}
-
-	sel, derr := goquery.NewDocumentFromReader(fixture)
-	if derr != nil {
-		t.Fatalf("Can't parse fixture file: %v", derr)
-	}
-
-	s := &Stats{body: sel}
-	url, userr := s.Upstream()
+func compareResultList(t *testing.T, r ResultList, f ResultList, s *Stats) {
+	userr := r.ParseFromStats(s)
 	if userr != nil {
-		t.Errorf("Error Upstream(): %v", userr)
+		t.Errorf("Error %s ParseFromStats(): %v", reflect.TypeOf(r), userr)
 	}
-	for i := 0; i < Max(len(url.Channels), len(fixtureUsr.Channels)); i++ {
-		if len(url.Channels)-1 < i {
-			t.Errorf("Upstream() missing results for idx %d, should be %#v\n", i, fixtureUsr.Channels[i])
-		} else if len(fixtureUsr.Channels)-1 < i {
-			t.Errorf("Upstream() missing results for idx %d, should be %#v\n", i, url.Channels[i])
-		} else if url.Channels[i] != fixtureUsr.Channels[i] {
-			t.Errorf("Upstream() results differ for %d: %#v vs %#v", i, url.Channels[i], fixtureUsr.Channels[i])
-		}
+	if !cmp.Equal(r, f) {
+		t.Errorf("%s results differ for %v vs %v", reflect.TypeOf(r), r, f)
 	}
 }
 
-func Max(x, y int) int {
-	if x > y {
-		return x
+func TestParsers(t *testing.T) {
+	fixture, err := os.Open(fixtureFilename)
+	if err != nil {
+		t.Fatalf("Can't open fixture file: %v", err)
 	}
-	return y
+
+	sel, derr := goquery.NewDocumentFromReader(fixture)
+	if derr != nil {
+		t.Fatalf("Can't parse fixture file: %v", derr)
+	}
+
+	s := &Stats{body: sel}
+
+	dhl := DownstreamResultList{}
+	usl := UpstreamResultList{}
+
+	compareResultList(t, &dhl, &fixtureDsr, s)
+	compareResultList(t, &usl, &fixtureUsr, s)
 }
