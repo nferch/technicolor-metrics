@@ -7,17 +7,17 @@ import (
 	"strings"
 )
 
-/* Container for Stats page */
+// Stats is a container for data scraped from the vendor_network.asp page.
 type Stats struct {
 	body *goquery.Document
 }
 
-/* Downstream stats */
+// DownstreamResultList is the stats for downstream.
 type DownstreamResultList struct {
 	DownstreamChannels []DownstreamResult
 }
 
-/* A single channel's stats */
+// DownstreamResult is a single channel's stats
 type DownstreamResult struct {
 	Index      uint8
 	LockStatus string
@@ -42,9 +42,9 @@ type UpstreamResult struct {
 	Modulation string
 }
 
+// Downstream parses downstream stats from HTML
 func (s *Stats) Downstream() (*DownstreamResultList, error) {
 	// #content > div:nth-child(6)
-	// s.body.Find("//*[@id=\"module\"]/table/thead/tr/th[1]").Each(func(i int, s *goquery.Selection) {
 	//*[@id="content"]/div[5]/table/thead/tr/th[1]
 	tab, err := findStatsTable(s.body, "Downstream")
 	if err != nil {
