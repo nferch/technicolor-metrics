@@ -31,17 +31,17 @@ func (s *Stats) Downstream() (*DownstreamResultList, error) {
 	// #content > div:nth-child(6)
 	// s.body.Find("//*[@id=\"module\"]/table/thead/tr/th[1]").Each(func(i int, s *goquery.Selection) {
 	//*[@id="content"]/div[5]/table/thead/tr/th[1]
-	tab, err := findDownstreamTable(s.body)
+	tab, err := findStatsTable(s.body, "Downstream")
 	if err != nil {
 		return nil, err
 	}
 	return parseDownstream(tab)
 }
 
-func findDownstreamTable(sel *goquery.Document) (*goquery.Selection, error) {
+func findStatsTable(sel *goquery.Document, direction string) (*goquery.Selection, error) {
 	var tab *goquery.Selection
 	sel.Find(".module > table").EachWithBreak(func(i int, s *goquery.Selection) bool {
-		if s.Find("thead > tr > th").First().Text() == "Downstream" {
+		if s.Find("thead > tr > th").First().Text() == direction {
 			tab = s
 			return false
 		}
@@ -51,7 +51,7 @@ func findDownstreamTable(sel *goquery.Document) (*goquery.Selection, error) {
 	if tab != nil {
 		return tab, nil
 	}
-	return nil, errors.New("cannot find Downstream table in HTML")
+	return nil, errors.New("cannot find table in HTML")
 }
 
 func parseDownstream(sel *goquery.Selection) (*DownstreamResultList, error) {
