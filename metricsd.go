@@ -14,7 +14,7 @@ type metricsdConfig struct {
 	Modem modemConfig
 }
 type modemConfig struct {
-	IP       string
+	Address  string
 	Port     int
 	Username string
 	Password string
@@ -26,7 +26,7 @@ const defaultModemUsername string = "admin"
 const networkStatsURL string = "vendor_network.asp"
 
 func main() {
-	config := metricsdConfig{Modem: modemConfig{IP: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername}}
+	config := metricsdConfig{Modem: modemConfig{Address: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername}}
 
 	tomlData, ferr := ioutil.ReadFile("metricsd.conf")
 	if ferr != nil {
@@ -38,7 +38,7 @@ func main() {
 	}
 
 	bow := surf.NewBrowser()
-	modemURL := fmt.Sprintf("http://%s:%d/%s", config.Modem.IP, config.Modem.Port, networkStatsURL)
+	modemURL := fmt.Sprintf("http://%s:%d/%s", config.Modem.Address, config.Modem.Port, networkStatsURL)
 	log.Printf("Connecting to %s", modemURL)
 	if err := bow.Open(modemURL); err != nil {
 		log.Fatalf("Can't connect to modem: %s", err)
