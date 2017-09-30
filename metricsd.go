@@ -11,7 +11,8 @@ import (
 )
 
 type metricsdConfig struct {
-	Modem modemConfig
+	Modem    modemConfig
+	InfluxDB influxDBConfig
 }
 type modemConfig struct {
 	Address  string
@@ -20,13 +21,26 @@ type modemConfig struct {
 	Password string
 }
 
+type influxDBConfig struct {
+	Protocol string
+	Address  string
+	Port     int
+	Username string
+	Password string
+	Database string
+}
+
 const defaultModemIP string = "192.168.100.1"
 const defaultModemPort int = 80
 const defaultModemUsername string = "admin"
+const defaultInfluxDBPort = 8086
 const networkStatsURL string = "vendor_network.asp"
 
 func main() {
-	config := metricsdConfig{Modem: modemConfig{Address: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername}}
+	config := metricsdConfig{
+		Modem:    modemConfig{Address: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername},
+		InfluxDB: influxDBConfig{Port: defaultInfluxDBPort},
+	}
 
 	tomlData, ferr := ioutil.ReadFile("metricsd.conf")
 	if ferr != nil {
@@ -35,6 +49,11 @@ func main() {
 
 	if _, err := toml.Decode(string(tomlData), &config); err != nil {
 		log.Fatalf("Can't parse config: %s", err)
+	}
+
+	ifc, iferr := Connect(&config.InfluxDB)
+	if iferr != nil {
+		log.Fatal(iferr)
 	}
 
 	bow := surf.NewBrowser()
@@ -68,6 +87,8 @@ func main() {
 	if err := usl.ParseFromStats(&s); err != nil {
 		log.Fatalf("Can't parse Upstream stats: %s", err)
 	}
+
+	dhl.EmitToInfluxDB(ifc, &config.InfluxDB)
 
 	// #content > div:nth-child(6) > table > tbody > tr:nth-child(4) > th
 }
