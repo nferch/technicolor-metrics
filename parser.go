@@ -10,7 +10,7 @@ import (
 
 // Stats is a container for data scraped from the vendor_network.asp page.
 type Stats struct {
-	body *goquery.Document
+	body *goquery.Selection
 }
 
 // ResultList is a common interface for parsed data
@@ -67,7 +67,7 @@ func (url *UpstreamResultList) ParseFromStats(s *Stats) error {
 	return fromStats(url, s, "Upstream")
 }
 
-func findStatsTable(sel *goquery.Document, direction string) (*goquery.Selection, error) {
+func findStatsTable(sel *goquery.Selection, direction string) (*goquery.Selection, error) {
 	var tab *goquery.Selection
 	sel.Find(".module > table").EachWithBreak(func(i int, s *goquery.Selection) bool {
 		if s.Find("thead > tr > th").First().Text() == direction {

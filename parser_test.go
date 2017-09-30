@@ -34,7 +34,7 @@ func TestParsers(t *testing.T) {
 		t.Fatalf("Can't parse fixture file: %v", derr)
 	}
 
-	s := &Stats{body: sel}
+	s := &Stats{body: sel.Selection}
 
 	dhl := DownstreamResultList{}
 	usl := UpstreamResultList{}
