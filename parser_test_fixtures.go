@@ -139,9 +139,9 @@ var fixtureDsr = DownstreamResultList{
 
 var fixtureUsr = UpstreamResultList{
 	Channels: []UpstreamResult{
-		UpstreamResult{Index: 0x1, LockStatus: "Locked", Frequency: 0, SymbolRate: 5120, Power: 0, Modulation: "ATDMA"},
-		UpstreamResult{Index: 0x2, LockStatus: "Locked", Frequency: 0, SymbolRate: 5120, Power: 0, Modulation: "ATDMA"},
-		UpstreamResult{Index: 0x3, LockStatus: "Locked", Frequency: 0, SymbolRate: 2560, Power: 0, Modulation: "TDMA"},
-		UpstreamResult{Index: 0x4, LockStatus: "Locked", Frequency: 0, SymbolRate: 5120, Power: 0, Modulation: "ATDMA"},
+		UpstreamResult{Index: 0x1, LockStatus: "Locked", Frequency: 0, SymbolRate: 5120, Power: 36.3, Modulation: "ATDMA"},
+		UpstreamResult{Index: 0x2, LockStatus: "Locked", Frequency: 0, SymbolRate: 5120, Power: 36.3, Modulation: "ATDMA"},
+		UpstreamResult{Index: 0x3, LockStatus: "Locked", Frequency: 0, SymbolRate: 2560, Power: 36.3, Modulation: "TDMA"},
+		UpstreamResult{Index: 0x4, LockStatus: "Locked", Frequency: 0, SymbolRate: 5120, Power: 36.3, Modulation: "ATDMA"},
 	},
 }

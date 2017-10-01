@@ -142,7 +142,7 @@ func (url *UpstreamResultList) parseFromSelection(sel *goquery.Selection) error 
 				url.Channels[j].Frequency = int16(tdint)
 			case "Symbol Rate":
 				url.Channels[j].SymbolRate = int16(tdint)
-			case "Power":
+			case "Power Level":
 				url.Channels[j].Power = float32(tdfloat)
 			case "Modulation":
 				url.Channels[j].Modulation = td.Text()
