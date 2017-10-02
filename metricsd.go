@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"time"
 
 	"github.com/BurntSushi/toml"
 	"github.com/headzoo/surf/browser"
+	"github.com/influxdata/influxdb/client/v2"
 	"gopkg.in/headzoo/surf.v1"
 )
 
@@ -36,6 +38,9 @@ const defaultModemUsername string = "admin"
 const defaultInfluxDBPort = 8086
 const networkStatsURL string = "vendor_network.asp"
 
+// TODO: put this into configuration
+const defaultPollDelay int = 600
+
 func main() {
 	config := metricsdConfig{
 		Modem:    modemConfig{Address: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername},
@@ -57,6 +62,13 @@ func main() {
 	}
 
 	bow := surf.NewBrowser()
+	for {
+		SubmitMetrics(&config, bow, ifc)
+		time.Sleep(time.Duration(defaultPollDelay) * time.Second)
+	}
+}
+
+func SubmitMetrics(config *metricsdConfig, bow *browser.Browser, ifc client.Client) {
 	modemURL := fmt.Sprintf("http://%s:%d/%s", config.Modem.Address, config.Modem.Port, networkStatsURL)
 	log.Printf("Connecting to %s", modemURL)
 	if err := bow.Open(modemURL); err != nil {
