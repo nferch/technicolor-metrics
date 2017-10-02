@@ -89,6 +89,7 @@ func main() {
 	}
 
 	dhl.EmitToInfluxDB(ifc, &config.InfluxDB)
+	usl.EmitToInfluxDB(ifc, &config.InfluxDB)
 
 	// #content > div:nth-child(6) > table > tbody > tr:nth-child(4) > th
 }
