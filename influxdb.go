@@ -35,13 +35,15 @@ func (drl *DownstreamResultList) EmitToInfluxDB(clt client.Client, ifconf *influ
 	}
 
 	for _, d := range drl.Channels {
-		tags := map[string]string{"channel": fmt.Sprintf("%d", (d.Index))}
+		tags := map[string]string{
+			"channel":   fmt.Sprintf("%d", (d.Index)),
+			"direction": "downstream"}
 		fields := map[string]interface{}{
 			"Frequency": d.Frequency,
 			"SNR":       d.SNR,
 			"Power":     d.Power,
 		}
-		pt, err := client.NewPoint("downstream", tags, fields, time.Now())
+		pt, err := client.NewPoint("cablemodem", tags, fields, time.Now())
 		if err != nil {
 			log.Printf("Can't create point: %s", err)
 		}
@@ -63,13 +65,15 @@ func (drl *UpstreamResultList) EmitToInfluxDB(clt client.Client, ifconf *influxD
 	}
 
 	for _, d := range drl.Channels {
-		tags := map[string]string{"channel": fmt.Sprintf("%d", (d.Index))}
+		tags := map[string]string{
+			"channel":   fmt.Sprintf("%d", (d.Index)),
+			"direction": "upstream"}
 		fields := map[string]interface{}{
 			"Frequency":  d.Frequency,
 			"SymbolRate": d.SymbolRate,
 			"Power":      d.Power,
 		}
-		pt, err := client.NewPoint("upstream", tags, fields, time.Now())
+		pt, err := client.NewPoint("cablemodem", tags, fields, time.Now())
 		if err != nil {
 			log.Printf("Can't create point: %s", err)
 		}
