@@ -96,6 +96,7 @@ func readConfig(config *metricsdConfig, ctx *cli.Context) {
 	}
 }
 
+// SubmitMetrics orchestrates the connection/collection/submission process.
 func SubmitMetrics(config *metricsdConfig, bow *browser.Browser, ifc client.Client) {
 	modemURL := fmt.Sprintf("http://%s:%d/%s", config.Modem.Address, config.Modem.Port, networkStatsURL)
 	log.Debugf("Connecting to %s", modemURL)
@@ -116,15 +117,15 @@ func SubmitMetrics(config *metricsdConfig, bow *browser.Browser, ifc client.Clie
 		}
 	}
 	// fmt.Println(bow.Body())
-	s := Stats{body: bow.Dom()}
+	s := WANStatsPage{Body: bow.Dom()}
 
 	dhl := DownstreamResultList{}
 	usl := UpstreamResultList{}
 
-	if err := dhl.ParseFromStats(&s); err != nil {
+	if err := dhl.ParseFromStatsPage(&s); err != nil {
 		log.Fatalf("Can't parse Downstream stats: %s", err)
 	}
-	if err := usl.ParseFromStats(&s); err != nil {
+	if err := usl.ParseFromStatsPage(&s); err != nil {
 		log.Fatalf("Can't parse Upstream stats: %s", err)
 	}
 

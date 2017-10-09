@@ -8,6 +8,9 @@ import (
 	"github.com/influxdata/influxdb/client/v2"
 )
 
+// TODO: abstract metrics backend from interface
+
+// Connect creates the client for connecting to the db.
 func Connect(ifconf *influxDBConfig) (client.Client, error) {
 	c, err := client.NewHTTPClient(client.HTTPConfig{
 		Addr:     fmt.Sprintf("%s://%s:%d", ifconf.Protocol, ifconf.Address, ifconf.Port),
@@ -21,6 +24,7 @@ func Connect(ifconf *influxDBConfig) (client.Client, error) {
 	return c, err
 }
 
+// EmitToInfluxDB emits the ResultList as points to the db.
 func (drl *DownstreamResultList) EmitToInfluxDB(clt client.Client, ifconf *influxDBConfig) {
 	bp, err := client.NewBatchPoints(client.BatchPointsConfig{
 		Database:  ifconf.Database,
@@ -48,6 +52,7 @@ func (drl *DownstreamResultList) EmitToInfluxDB(clt client.Client, ifconf *influ
 	}
 }
 
+// EmitToInfluxDB emits the ResultList as points to the db.
 func (drl *UpstreamResultList) EmitToInfluxDB(clt client.Client, ifconf *influxDBConfig) {
 	bp, err := client.NewBatchPoints(client.BatchPointsConfig{
 		Database:  ifconf.Database,

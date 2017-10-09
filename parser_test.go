@@ -13,8 +13,8 @@ import (
 var _ ResultList = (*DownstreamResultList)(nil)
 var _ ResultList = (*UpstreamResultList)(nil)
 
-func compareResultList(t *testing.T, r ResultList, f ResultList, s *Stats) {
-	userr := r.ParseFromStats(s)
+func compareResultList(t *testing.T, r ResultList, f ResultList, s *WANStatsPage) {
+	userr := r.ParseFromStatsPage(s)
 	if userr != nil {
 		t.Errorf("Error %s ParseFromStats(): %v", reflect.TypeOf(r), userr)
 	}
@@ -34,7 +34,7 @@ func TestParsers(t *testing.T) {
 		t.Fatalf("Can't parse fixture file: %v", derr)
 	}
 
-	s := &Stats{body: sel.Selection}
+	s := &WANStatsPage{Body: sel.Selection}
 
 	dhl := DownstreamResultList{}
 	usl := UpstreamResultList{}
