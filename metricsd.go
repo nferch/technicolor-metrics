@@ -4,11 +4,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/BurntSushi/toml"
 	"github.com/headzoo/surf/browser"
 	"github.com/influxdata/influxdb/client/v2"
+	"github.com/urfave/cli"
 	"gopkg.in/headzoo/surf.v1"
 )
 
@@ -42,20 +45,27 @@ const networkStatsURL string = "vendor_network.asp"
 const defaultPollDelay int = 600
 
 func main() {
+	app := cli.NewApp()
+	app.Name = "technicolor-metrics"
+	app.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:  "config, c",
+			Value: filepath.Join("/etc", app.Name, "metrics.conf"),
+			Usage: "Use this configuration file instead of ",
+		},
+	}
+	app.Action = run
+	app.Run(os.Args)
+}
+
+func run(c *cli.Context) error {
+
 	config := metricsdConfig{
 		Modem:    modemConfig{Address: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername},
 		InfluxDB: influxDBConfig{Port: defaultInfluxDBPort},
 	}
 
-	tomlData, ferr := ioutil.ReadFile("metricsd.conf")
-	if ferr != nil {
-		log.Fatalf("Can't read config file: %s", ferr)
-	}
-
-	if _, err := toml.Decode(string(tomlData), &config); err != nil {
-		log.Fatalf("Can't parse config: %s", err)
-	}
-
+	readConfig(&config, c)
 	ifc, iferr := Connect(&config.InfluxDB)
 	if iferr != nil {
 		log.Fatal(iferr)
@@ -65,6 +75,17 @@ func main() {
 	for {
 		SubmitMetrics(&config, bow, ifc)
 		time.Sleep(time.Duration(defaultPollDelay) * time.Second)
+	}
+}
+
+func readConfig(config *metricsdConfig, ctx *cli.Context) {
+	tomlData, ferr := ioutil.ReadFile(ctx.GlobalString("config"))
+	if ferr != nil {
+		log.Fatalf("Can't read config file %s: %s", ctx.GlobalString("config"), ferr)
+	}
+
+	if _, err := toml.Decode(string(tomlData), config); err != nil {
+		log.Fatalf("Can't parse config: %s", err)
 	}
 }
 
