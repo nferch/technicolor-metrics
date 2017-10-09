@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 	"time"
@@ -11,6 +10,7 @@ import (
 	"github.com/BurntSushi/toml"
 	"github.com/headzoo/surf/browser"
 	"github.com/influxdata/influxdb/client/v2"
+	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"gopkg.in/headzoo/surf.v1"
 )
@@ -53,12 +53,19 @@ func main() {
 			Value: filepath.Join("/etc", app.Name, "metrics.conf"),
 			Usage: "Use this configuration file instead of ",
 		},
+		cli.BoolFlag{
+			Name:  "debug, d",
+			Usage: "Enable debugging output",
+		},
 	}
 	app.Action = run
 	app.Run(os.Args)
 }
 
 func run(c *cli.Context) error {
+	if c.Bool("debug") {
+		log.SetLevel(log.DebugLevel)
+	}
 
 	config := metricsdConfig{
 		Modem:    modemConfig{Address: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername},
@@ -91,19 +98,19 @@ func readConfig(config *metricsdConfig, ctx *cli.Context) {
 
 func SubmitMetrics(config *metricsdConfig, bow *browser.Browser, ifc client.Client) {
 	modemURL := fmt.Sprintf("http://%s:%d/%s", config.Modem.Address, config.Modem.Port, networkStatsURL)
-	log.Printf("Connecting to %s", modemURL)
+	log.Debugf("Connecting to %s", modemURL)
 	if err := bow.Open(modemURL); err != nil {
 		log.Fatalf("Can't connect to modem: %s", err)
 	}
 
-	fmt.Println(bow.Title())
+	log.Debugf("fetched page %s", bow.Title())
 	/*
 		for _, e := range bow.Forms() {
 			fmt.Printf("%v\n", e)
 		}
 	*/
 	if len(bow.Find("#login").Nodes) > 0 {
-		log.Println("logging in")
+		log.Debug("logging in")
 		if lerr := login(bow, config); lerr != nil {
 			log.Fatalf("Error logging in: %s", lerr)
 		}
@@ -140,7 +147,7 @@ func login(bow *browser.Browser, config *metricsdConfig) error {
 	if err = lform.Input("loginPassword", config.Modem.Password); err != nil {
 		log.Fatalf("Can't find password field in HTML: %s", err)
 	}
-	log.Println("submitting form")
+	log.Debug("submitting form")
 	if lerr := lform.Submit(); lerr != nil {
 		log.Fatalf("Error submitting login form: %v", lerr)
 	}

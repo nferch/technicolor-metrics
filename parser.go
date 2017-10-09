@@ -2,10 +2,12 @@ package main
 
 import (
 	"errors"
-	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"strconv"
 	"strings"
+
+	"github.com/PuerkitoBio/goquery"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // Stats is a container for data scraped from the vendor_network.asp page.
@@ -114,7 +116,7 @@ func (drl *DownstreamResultList) parseFromSelection(sel *goquery.Selection) erro
 			}
 		})
 	})
-	fmt.Printf("Parsed as %#v\n", drl)
+	log.Debugf("Parsed as %#v\n", drl)
 	return nil
 }
 
@@ -149,6 +151,6 @@ func (url *UpstreamResultList) parseFromSelection(sel *goquery.Selection) error 
 			}
 		})
 	})
-	fmt.Printf("Parsed as %#v\n", url)
+	log.Debugf("Parsed as %#v\n", url)
 	return nil
 }
