@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+
+export DH_OPTIONS
+
+GO := GOPATH=$(GOPATH) go
+#export DH_VERBOSE=1
+export DH_GOPKG := github.com/nferch/technicolor-metrics
+
+%:
+	dh $@ --buildsystem=golang --with=golang --with=systemd
+
+# Fetch our own deps instead of having to package everything...
+override_dh_auto_build:
+	$(GO) get
+	$(GO) build
+
+override_dh_auto_test:

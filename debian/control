@@ -1,0 +1,14 @@
+Source: technicolor-metrics
+Section: golang
+Priority: extra
+Maintainer: Nathan Ferch <nf+github@marginal.net>
+Build-Depends: debhelper (>= 8.0.0),
+               dh-golang,
+Standards-Version: 3.9.2
+
+Package: technicolor-metrics
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, dpkg-dev
+Built-Using: ${misc:Built-Using}
+Description: metrics collection for Technicolor cablemodem
+ Metrics collection for Technicolor cablemodem

@@ -1,0 +1,9 @@
+[Unit]
+Description=metrics for Technicolor cablemodem
+
+[Service]
+EnvironmentFile=/etc/default/technicolor-metrics
+ExecStart=/usr/bin/technicolor-metrics $TECHNICOLOR_METRICS_ARGS
+
+[Install]
+WantedBy=multi-user.target
