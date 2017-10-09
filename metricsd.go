@@ -16,8 +16,9 @@ import (
 )
 
 type metricsdConfig struct {
-	Modem    modemConfig
-	InfluxDB influxDBConfig
+	PollDelay int
+	Modem     modemConfig
+	InfluxDB  influxDBConfig
 }
 type modemConfig struct {
 	Address  string
@@ -39,10 +40,8 @@ const defaultModemIP string = "192.168.100.1"
 const defaultModemPort int = 80
 const defaultModemUsername string = "admin"
 const defaultInfluxDBPort = 8086
-const networkStatsURL string = "vendor_network.asp"
-
-// TODO: put this into configuration
 const defaultPollDelay int = 600
+const networkStatsURL string = "vendor_network.asp"
 
 func main() {
 	app := cli.NewApp()
@@ -68,8 +67,9 @@ func run(c *cli.Context) error {
 	}
 
 	config := metricsdConfig{
-		Modem:    modemConfig{Address: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername},
-		InfluxDB: influxDBConfig{Port: defaultInfluxDBPort},
+		PollDelay: defaultPollDelay,
+		Modem:     modemConfig{Address: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername},
+		InfluxDB:  influxDBConfig{Port: defaultInfluxDBPort},
 	}
 
 	readConfig(&config, c)
@@ -81,7 +81,7 @@ func run(c *cli.Context) error {
 	bow := surf.NewBrowser()
 	for {
 		SubmitMetrics(&config, bow, ifc)
-		time.Sleep(time.Duration(defaultPollDelay) * time.Second)
+		time.Sleep(time.Duration(config.PollDelay) * time.Second)
 	}
 }
 
