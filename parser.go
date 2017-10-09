@@ -6,18 +6,17 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-
 	log "github.com/sirupsen/logrus"
 )
 
-// Stats is a container for data scraped from the vendor_network.asp page.
-type Stats struct {
-	body *goquery.Selection
+// WANStatsPage is a container for data scraped from the vendor_network.asp page.
+type WANStatsPage struct {
+	Body *goquery.Selection
 }
 
 // ResultList is a common interface for parsed data
 type ResultList interface {
-	ParseFromStats(*Stats) error
+	ParseFromStatsPage(*WANStatsPage) error
 	parseFromSelection(*goquery.Selection) error
 }
 
@@ -51,21 +50,22 @@ type UpstreamResult struct {
 	Modulation string
 }
 
-func fromStats(r ResultList, s *Stats, direction string) error {
-	tab, err := findStatsTable(s.body, direction)
+// fromStats finds the matching table in the Selection, then parses it according to the struct provided
+func fromStats(r ResultList, s *WANStatsPage, direction string) error {
+	tab, err := findStatsTable(s.Body, direction)
 	if err != nil {
 		return err
 	}
 	return r.parseFromSelection(tab)
 }
 
-// ParseFromStats extracts the stats from the HTML in the Stats page
-func (drl *DownstreamResultList) ParseFromStats(s *Stats) error {
+// ParseFromStatsPage extracts the stats from the HTML in the Stats page
+func (drl *DownstreamResultList) ParseFromStatsPage(s *WANStatsPage) error {
 	return fromStats(drl, s, "Downstream")
 }
 
-// ParseFromStats extracts the stats from the HTML in the Stats page
-func (url *UpstreamResultList) ParseFromStats(s *Stats) error {
+// ParseFromStatsPage extracts the stats from the HTML in the Stats page
+func (url *UpstreamResultList) ParseFromStatsPage(s *WANStatsPage) error {
 	return fromStats(url, s, "Upstream")
 }
 
