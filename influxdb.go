@@ -43,7 +43,7 @@ func (drl *DownstreamResultList) EmitToInfluxDB(clt client.Client, ifconf *influ
 			"SNR":       d.SNR,
 			"Power":     d.Power,
 		}
-		pt, err := client.NewPoint("cablemodem", tags, fields, time.Now())
+		pt, err := client.NewPoint(ifconf.Measurement, tags, fields, time.Now())
 		if err != nil {
 			log.Printf("Can't create point: %s", err)
 		}
@@ -73,7 +73,7 @@ func (drl *UpstreamResultList) EmitToInfluxDB(clt client.Client, ifconf *influxD
 			"SymbolRate": d.SymbolRate,
 			"Power":      d.Power,
 		}
-		pt, err := client.NewPoint("cablemodem", tags, fields, time.Now())
+		pt, err := client.NewPoint(ifconf.Measurement, tags, fields, time.Now())
 		if err != nil {
 			log.Printf("Can't create point: %s", err)
 		}

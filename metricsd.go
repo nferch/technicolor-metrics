@@ -28,18 +28,21 @@ type modemConfig struct {
 }
 
 type influxDBConfig struct {
-	Protocol string
-	Address  string
-	Port     int
-	Username string
-	Password string
-	Database string
+	Protocol    string
+	Address     string
+	Port        int
+	Username    string
+	Password    string
+	Database    string
+	Measurement string
+	Noop        bool
 }
 
 const defaultModemIP string = "192.168.100.1"
 const defaultModemPort int = 80
 const defaultModemUsername string = "admin"
 const defaultInfluxDBPort = 8086
+const defaultInfluxMeasurement = "cablemodem"
 const defaultPollDelay int = 600
 const networkStatsURL string = "vendor_network.asp"
 
@@ -51,6 +54,10 @@ func main() {
 			Name:  "config, c",
 			Value: filepath.Join("/etc", app.Name, "metrics.conf"),
 			Usage: "Use this configuration file instead of ",
+		},
+		cli.StringFlag{
+			Name:  "measurement, m",
+			Usage: "Use measurement instead of default or from config file",
 		},
 		cli.BoolFlag{
 			Name:  "debug, d",
@@ -69,10 +76,14 @@ func run(c *cli.Context) error {
 	config := metricsdConfig{
 		PollDelay: defaultPollDelay,
 		Modem:     modemConfig{Address: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername},
-		InfluxDB:  influxDBConfig{Port: defaultInfluxDBPort},
+		InfluxDB:  influxDBConfig{Port: defaultInfluxDBPort, Measurement: defaultInfluxMeasurement},
 	}
 
 	readConfig(&config, c)
+	if c.GlobalString("measurement") != "" {
+		config.InfluxDB.Measurement = c.GlobalString("measurement")
+		log.Warningf("writing to measurement %s", config.InfluxDB.Measurement)
+	}
 	ifc, iferr := Connect(&config.InfluxDB)
 	if iferr != nil {
 		log.Fatal(iferr)
