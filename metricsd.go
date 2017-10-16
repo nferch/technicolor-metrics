@@ -63,6 +63,10 @@ func main() {
 			Name:  "debug, d",
 			Usage: "Enable debugging output",
 		},
+		cli.BoolFlag{
+			Name:  "noop, n",
+			Usage: "Dry run mode, don't send metrics",
+		},
 	}
 	app.Action = run
 	app.Run(os.Args)
@@ -73,10 +77,11 @@ func run(c *cli.Context) error {
 		log.SetLevel(log.DebugLevel)
 	}
 
+	// TODO: commandline usage of noop should override config
 	config := metricsdConfig{
 		PollDelay: defaultPollDelay,
 		Modem:     modemConfig{Address: defaultModemIP, Port: defaultModemPort, Username: defaultModemUsername},
-		InfluxDB:  influxDBConfig{Port: defaultInfluxDBPort, Measurement: defaultInfluxMeasurement},
+		InfluxDB:  influxDBConfig{Port: defaultInfluxDBPort, Measurement: defaultInfluxMeasurement, Noop: c.Bool("noop")},
 	}
 
 	readConfig(&config, c)

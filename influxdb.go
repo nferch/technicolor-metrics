@@ -49,6 +49,11 @@ func (drl *DownstreamResultList) EmitToInfluxDB(clt client.Client, ifconf *influ
 		}
 		bp.AddPoint(pt)
 	}
+	if ifconf.Noop {
+		log.Printf("Dry run mode, not writing points.")
+		dumpBatchPoints(bp)
+		return
+	}
 	if err := clt.Write(bp); err != nil {
 		log.Printf("Error writing points: %s", err)
 	}
@@ -79,7 +84,25 @@ func (drl *UpstreamResultList) EmitToInfluxDB(clt client.Client, ifconf *influxD
 		}
 		bp.AddPoint(pt)
 	}
+	if ifconf.Noop {
+		log.Printf("Dry run mode, not writing points.")
+		dumpBatchPoints(bp)
+		return
+	}
 	if err := clt.Write(bp); err != nil {
 		log.Printf("Error writing points: %s", err)
+	}
+}
+
+func dumpBatchPoints(bp client.BatchPoints) {
+	for _, p := range bp.Points() {
+		f, err := p.Fields()
+		if err != nil {
+			log.Printf("  error retrieving points for %#v", p)
+		} else {
+			log.Printf("  Tags: %#v", p.Tags())
+			log.Printf("  Fields: %#v", f)
+			log.Println()
+		}
 	}
 }
